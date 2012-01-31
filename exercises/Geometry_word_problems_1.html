@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html data-require="math graphie word-problems spin">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Geometry word problems 1</title>
+	<script src="../khan-exercise.js"></script>
+
+	<script type="text/javascript">
+		var L_COLOR = "orange";
+		var W_COLOR = "blue";
+
+		var S_COLOR = "purple";
+
+		var P_COLOR = "green";
+		var K_COLOR = "red";
+
+		function initRect( L, W ) {
+			var graph = KhanUtil.currentGraph;
+
+			graph.init({
+				range: [ [-1, L + 1], [-1, W + 1] ],
+				scale: 500 / (2 * L + 2 * W)
+			});
+
+			graph.path( [ [0, 0], [L, 0] ], { "stroke": L_COLOR } );
+			graph.label( [L/2, 0], "\\color{" + L_COLOR + "}{l = " + L + "}", "below" );
+
+			graph.path( [ [L, 0], [L, W] ], { "stroke": W_COLOR } );
+			graph.label( [L, W/2], "\\color{" + W_COLOR + "}{w = " + W + "}", "right" );
+
+			graph.path( [ [L, W], [0, W], [0, 0] ] );
+		}
+
+		function drawRectPerimeter( L, W ) {
+			var graph = KhanUtil.currentGraph;
+
+			graph.path( [ [0, 0], [L, 0], [L, W], [0, W], [0, 0] ], { "stroke": P_COLOR } );
+			graph.label( [L/2, W], "\\color{" + P_COLOR + "}{P = " + (2 * L + 2 * W) + "}", "above" );
+		}
+
+		function drawRectArea( L, W ) {
+			var graph = KhanUtil.currentGraph;
+
+			graph.path( [ [0, 0], [L, 0], [L, W], [0, W], [0, 0] ], { "stroke-opacity": 0, "fill": "#ffcccc" } );
+			graph.label( [L/2, W/2], "\\color{" + K_COLOR + "}{K = " + L * W + "}", "center" );
+		}
+
+		function initSq( S ) {
+			var graph = KhanUtil.currentGraph;
+
+			graph.init({
+				range: [ [-1 * (S / 5), S + (S / 5)], [-1 * (S / 5), S + (S / 5)] ],
+				scale: 200 / S
+			});
+
+			graph.path( [ [0, 0], [S, 0], [S, S], [0, S], [0, 0] ] );
+		}
+
+		function drawSqSide( S ) {
+			var graph = KhanUtil.currentGraph;
+
+			graph.path( [ [S, 0], [S, S] ], { "stroke": S_COLOR } );
+			graph.label( [S, S/2], "\\color{" + S_COLOR + "}{s = " + S + "}", "right" );
+		}
+
+		function drawSqPerimeter( S ) {
+			var graph = KhanUtil.currentGraph;
+
+			graph.path( [ [0, 0], [0, S], [S, S], [S, 0], [0, 0] ], { "stroke": P_COLOR } );
+			graph.label( [S/2, S], "\\color{" + P_COLOR + "}{P = " + 4*S + "}", "above" );
+		}
+
+		function drawSqArea( S ) {
+			var graph = KhanUtil.currentGraph;
+
+			graph.path( [ [0, 0], [S, 0], [S, S], [0, S], [0, 0] ], { "stroke-opacity": 0, "fill": "#ffcccc" } );
+			graph.label( [S/2, S/2], "\\color{" + K_COLOR + "}{K = " + S * S + "}", "center" );
+		}
+	</script>
+	
+	<script type="text/javascript">
+		var R_COLOR = "purple";
+		var D_COLOR = "green";
+		var C_COLOR = "blue";
+		var K_COLOR = "red";
+		
+		function initCircle( R ) {
+			var graph = KhanUtil.currentGraph;
+			
+			graph.init({
+				range: [ [-1.1, 1.1], [-1.1, 1.1] ],
+				scale: 100
+			});
+			
+			graph.circle( [0, 0], 1, { "fill-opacity": 0 } );
+		}
+
+		function drawRadius( R ) {
+			var graph = KhanUtil.currentGraph;
+			
+			graph.line( [0, 0], [1, 0], { "fill": "none", "stroke": R_COLOR } );
+			graph.label( [1/2, 0], "\\color{" + R_COLOR + "}{r = " + R + "}", "below" );
+		}
+
+		function drawDiameter( R ) {
+			var graph = KhanUtil.currentGraph;
+			
+			graph.line( [-1, 0], [1, 0], { "stroke": D_COLOR } );
+			graph.label( [0, 0], "\\color{" + D_COLOR + "}{d = " + 2 * R + "}", "above" );
+		}
+
+		function drawCircumference( R ) {
+			var graph = KhanUtil.currentGraph;
+			
+			graph.circle( [0, 0], 1, { "stroke": C_COLOR } );
+			graph.label( [0, -1], "\\color{" + C_COLOR + "}{c = " + 2 * R + "\\pi}", "below" );
+		}
+
+		function drawArea( R ) {
+			var graph = KhanUtil.currentGraph;
+			
+			var c = graph.circle( [0, 0], 1, { "fill": "#ffcccc", "stroke-width": 0 } );
+			jQuery(c.node).insertBefore(jQuery(graph.raphael.canvas).find("ellipse")[0]);
+
+			graph.label( [0, 0.5], "\\color{" + K_COLOR + "}{K = " + R*R + "\\pi}", "above" );
+		}
+	</script>
+	
+	
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="rug area" data-weight="3">
+			<div class="vars" data-ensure="L !== W">
+				<var id="L">randRange(2, 12)</var>
+				<var id="W">randRange(2, 12)</var>
+				<var id="X">randRange(10,30)+L*W</var>
+			</div>
+
+			<div class="question">
+				<p><var>person(1)</var> found a beautiful rectangular rug that <var>he(1)</var> would like to put in <var>his(1)</var> living room. The rug is <var>L</var> meters long and <var>W</var> meters wide. The living room in <var>person(1)</var>'s house is <var>X</var> square meters.</p>
+				<p>How many square meters will the rug cover?</p>
+			</div>
+
+			<div class="solution"><var>L * W</var></div>
+
+			<div class="hints">
+				<p>We need to find out how much space, or area, the rectangular rug will take up in <var>person(1)</var>'s home.
+				</p>
+				
+				<p>The area of a rectangle is <code>\color{<var>L_COLOR</var>}{length}</code> times <code>\color{<var>W_COLOR</var>}{width}</code>, or <code>K = lw</code>.
+					<p>Let's draw a picture of the rug with the length and width labeled to help us solve the problem.</p>
+					<div class="graphie" id="rectangle">
+					initRect( L, W );
+				</div>
+					<p>Substituting <code>l = \color{<var>L_COLOR</var>}{<var>L</var>}</code> and <code>w = \color{<var>W_COLOR</var>}{<var>W</var>}</code> into our area formula gives <code>K = \color{<var>L_COLOR</var>}{<var>L</var>} \cdot \color{<var>W_COLOR</var>}{<var>W</var>} = \color{<var>K_COLOR</var>}{<var>L * W</var>}</code>.</p>
+
+					<div class="graphie" data-update="rectangle">
+						drawRectArea( L, W );
+					</div>
+				<div>
+				<p>The rug will take up <code>\color{<var>K_COLOR</var>}{<var>L * W</var>}</code> square meters in <var>person(1)</var>'s home.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div id="garden" data-weight="3">
+			<div class="vars" data-ensure="L !== W">
+				<var id="L">randRange(2, 12)</var>
+				<var id="W">randRange(2, 12)</var>
+				<var id="X">randRange(7, 20)</var>
+			</div>
+
+			<div class="question spin">
+				<p>In a photograph of <var>person(1)</var>'s backyard, a <var>L</var>-inch-long wall of {roses|bushes} spans the back of the rectangular garden, and a fence measuring <var>W</var> inches long and <var>X</var> inches tall covers the entire side of the garden.</p>
+				<p>What is the area of the garden in the photograph?</p>
+			</div>
+
+			<div class="solution"><var>L * W</var></div>
+
+			<div class="hints">
+				<p>We know that <var>person(1)</var>'s garden is rectangular, and we need to find its area.</p>	
+				<p>The area of a rectangle is <code>\color{<var>L_COLOR</var>}{length}</code> times <code>\color{<var>W_COLOR</var>}{width}</code>, or <code>K = lw</code>.
+					<p>Let's draw a picture of the garden with the length and width labeled to help us solve the problem.</p>
+					<div class="graphie" id="rectangle">
+					initRect( L, W );
+				</div>
+					<p>Substituting <code>l = \color{<var>L_COLOR</var>}{<var>L</var>}</code> and <code>w = \color{<var>W_COLOR</var>}{<var>W</var>}</code> into our area formula gives <code>K = \color{<var>L_COLOR</var>}{<var>L</var>} \cdot \color{<var>W_COLOR</var>}{<var>W</var>} = \color{<var>K_COLOR</var>}{<var>L * W</var>}</code>.</p>
+					<div class="graphie" data-update="rectangle">
+						drawRectArea( L, W );
+					</div>
+				<div>
+				<p>In the photograph, the area of <var>person(1)</var>'s garden is <code>\color{<var>K_COLOR</var>}{<var>L * W</var>}</code> square inches.</p>
+				</div>
+			</div>
+		</div>
+		
+
+		<div id="pool" data-weight="3">
+			<div class="vars" data-ensure="L !== W">
+				<var id="L">randRange(10, 15)</var>
+				<var id="W">randRange(8, 12)</var>
+				<var id="X">randRange(2, 4)</var>
+			</div>
+
+			<div class="question">
+				<p><var>person(1)</var> and <var>person(2)</var> decided to put a fence around their rectangular pool and the pavement surrounding it. The pool was <var>L-X</var> meters long and <var>W-X</var> meters wide.</p>
+				<p>There was a border of <var>X</var> meters of pavement all around the pool. How many meters long was the fence?</p>
+
+			</div>
+
+			<div class="solution"><var>2 * L + 2 * W</var></div>
+
+			<div class="hints">
+				<p>The fence went around both the pool and pavement, so it was equal to the perimeter of the rectangle made up of the pool and pavement.</p>
+				<p>To find the perimeter of a rectangle, we add all 4 sides together using the formula <code>P = l + w + l + w = 2(l + w)</code>. So, to find the perimeter of the pool and pavement, we need to know the length and width of the fenced-in area.</p>
+				<p>We know the pool was <var>L-X</var> meters long and <var>W-X</var> meters wide and that the pavement was <var>X</var> meters all around the pool. We need to add <var>X</var> to the length and width of the pool to find the total length and width of the fenced-in area.</p>
+				<p>The total fenced-in area was <var>L-X</var> + <var>X</var>, or <code>\color{<var>L_COLOR</var>}{<var>L</var>}</code>, meters long and <var>W-X</var> + <var>X</var>, or <code>\color{<var>W_COLOR</var>}{<var>W</var>}</code>, meters wide.</p>
+				<p>Let's draw a picture of the total fenced-in area with the total length and width labeled.
+				<div class="graphie" id="rectangle">
+					initRect( L, W );
+				</div>
+				<div>
+					<p>Substituting <code>l = \color{<var>L_COLOR</var>}{<var>L</var>}</code> and <code>w = \color{<var>W_COLOR</var>}{<var>W</var>}</code> into the perimeter formula gives <code>P = 2 (\color{<var>L_COLOR</var>}{<var>L</var>} + \color{<var>W_COLOR</var>}{<var>W</var>}) = \color{<var>P_COLOR</var>}{<var>2 * L + 2 * W</var>}</code>.</p>
+
+					<div class="graphie" data-update="rectangle">
+						drawRectPerimeter( L, W );
+					</div>
+				</div>
+				<p>The fence was <code>\color{<var>P_COLOR</var>}{<var>2 * L + 2 * W</var>}</code> meters long.</p>
+			</div>
+		</div>
+		
+		<div id="tire">
+			<div class="vars">
+				<var id="R">randRange(2, 12)</var>
+			</div>
+
+			<div class="question">
+				<p><var>person(1)</var> painted one of the tires on <var>his(1)</var> toy truck with <var>color(1)</var> paint. As <var>he(1)</var> pushed the truck on the driveway in front of <var>his(1)</var> house, a line of <var>color(1)</var> paint formed behind the tire.</p>
+				<p>If the tire had a radius of <var>R</var> inches, how long would the line of paint be after the tire made one complete rotation?</p>
+			</div>
+
+			<div class="solution" data-forms="integer, proper, improper, mixed, decimal, pi"><var>Math.PI * 2 * R</var></div>
+
+			<div class="hints">
+				<div>
+					<p>During one rotation of the tire, every point on the tire would touch the ground once.</p>
+				</div>
+				<div>
+					<p>So, the length of the line of paint would equal the circumference of the tire.</p>
+				</div>
+				<div>
+					<p>Let's draw a picture of the tire with the information we have about it labeled. We know the radius is <var>R</var> inches.</p></div>
+				<div class="graphie" id="circle">
+					initCircle( R );
+					
+					drawRadius( R );
+				</div>
+				<div>
+					<p>We know circumference (c) = <code>2\pi r</code>, so <code>c = 2 \pi \cdot \color{<var>R_COLOR</var>}{<var>R</var>} = \color{<var>C_COLOR</var>}{<var>2 * R</var>\pi}</code>.</p>
+				</div>
+					<div class="graphie" data-update="circle">
+						drawCircumference( R );
+					</div>
+				<div>After one rotation of the tire, the line of <var>color(1)</var> paint would be <code>\color{<var>C_COLOR</var>}{<var>2 * R</var>\pi}</code> inches long.
+			</div>
+		</div>
+		</div>
+		
+		<div id=solar-system>
+			<div class="vars">
+				<var id="R">randRange(2, 8)</var>
+			</div>
+
+			<div class="question">
+				<p>For a school project at <var>school(1)</var>, <var>person(1)</var> created a two-dimensional model of the solar system. <var>He(1)</var> traced drinking glasses of various sizes to represent the planets, sun, and moon.</p>
+				<p>For example, <var>person(1)</var> traced a glass with a diameter of <var>2*R</var> inches to represent the sun.</p>
+				<p>What was the area of the sun in <var>person(1)</var>'s model?</p>
+			</div>
+
+			<div class="solution" data-forms="integer, proper, improper, mixed, decimal, pi"><var>Math.PI * R * R</var></div>
+
+			<div class="hints">
+				<p>We need to find the area of the sun that <var>person(1)</var> drew in <var>his(1)</var> model. We know that <var>person(1)</var> drew the sun as a circle with a diameter of <var>2*R</var>.</p>
+				<p>We can find the area of a circle using the formula <code>K = \pi r^2</code>.</p>
+				<p>We need the radius of the sun <var>person(1)</var> drew to calculate area. Radius is half of the diameter, so <var>person(1)</var>'s sun had a radius of <var>(2*R)</var> / 2, or <code>\color{<var>R_COLOR</var>}{<var>R</var>}</code>, inches.</p>
+				<p>Let's draw a picture of the sun with the radius labeled.
+				<div class="graphie" id="circle">
+					initCircle( R );
+					
+					drawRadius( R );
+				</div>
+				<div>
+					<p>If we substitute <var>R</var> for the radius in the formula for the area of a circle, we get <code>K = \pi \cdot \color{<var>R_COLOR</var>}{<var>R</var>}^2 = \color{<var>K_COLOR</var>}{<var>R * R</var>\pi}</code>.</p>
+					<div class="graphie" data-update="circle">
+						drawArea( R );
+					</div></div>
+				<div><p>The area of the sun in <var>person(1)</var>'s model was <code>\color{<var>K_COLOR</var>}{<var>R * R</var>\pi}</code> square inches.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div id="art">
+			<div class="vars">
+				<var id="R">randRange(2, 12)</var>
+			</div>
+
+			<div class="question spin">
+				<p><var>person(1)</var>, the art teacher at <var>school(1)</var>, asked students to draw pictures of the ball from their favorite sport and to outline the ball in string.</p>
+				<p><var>person(2)</var> drew a {basketball|tennis ball|soccer ball} with a radius of <var>R</var> centimeters.</p>
+				<p>How much string did <var>person(2)</var> need to outline the ball in <var>his(2)</var> picture?</p>
+			</div>
+
+			<div class="solution" data-forms="integer, proper, improper, mixed, decimal, pi"><var>Math.PI * 2 * R</var></div>
+
+			<div class="hints">
+				<div>
+					<p>The distance around the ball is the same as the circumference.</p>
+				</div>
+				<div>
+					<p>Let's draw a picture of the ball with the information we have about it labeled. We know the radius is <var>R</var> centimeters.</p></div>
+				<div class="graphie" id="circle">
+					initCircle( R );
+					
+					drawRadius( R );
+				</div>
+				<div>
+					<p>We know circumference (c) = <code>2\pi r</code>, so <code>c = 2 \pi \cdot \color{<var>R_COLOR</var>}{<var>R</var>} = \color{<var>C_COLOR</var>}{<var>2 * R</var>\pi}</code>.</p>
+				</div>
+					<div class="graphie" data-update="circle">
+						drawCircumference( R );
+					</div>
+				<div><var>person(2)</var> needed <code>\color{<var>C_COLOR</var>}{<var>2 * R</var>\pi}</code> centimeters of string for <var>his(2)</var> picture.
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
